@@ -14,22 +14,6 @@ router.get('/', (req, res) => {
   });
 });
 
-// router.get('/:id/instructions', (req, res) => {
-//     const { id } = req.params;
-
-//     Recipes.getInstructions(id)
-//      .then(steps => {
-//          if (steps.length) {
-//              res.json(steps);
-//          } else {
-//              res.status(404).json({ message: "Could not find steps"})
-//          }
-//      })
-//      .catch(err => {
-//          res.status(500).json({ message: "Failed to get steps"})
-//      })
-// })
-
 router.get('/:id/instructions', (req, res) => {
   const { id } = req.params;
 
@@ -38,11 +22,27 @@ router.get('/:id/instructions', (req, res) => {
     if (steps.length) {
       res.json(steps);
     } else {
-      res.status(404).json({ message: 'Could not find steps for given scheme' })
+      res.status(404).json({ message: 'Could not find steps for given id' })
     }
   })
   .catch(err => {
     res.status(500).json({ message: 'Failed to get steps' });
+  });
+});
+
+router.get('/:id/shoppingList', (req, res) => {
+    const { id } = req.params;
+
+    Recipes.getShoppingList(id)
+        .then(lists => {
+    if (lists) {
+      res.json(lists);
+    } else {
+      res.status(404).json({ message: 'Could not find lists for given id' })
+    }
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get lists' });
   });
 });
 
